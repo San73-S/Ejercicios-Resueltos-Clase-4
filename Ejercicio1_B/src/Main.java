@@ -11,6 +11,15 @@ public class Main {
         cargarVectorDeNumeros(vecNumeros);
         ascDesc = validacionYCargaDelOrden();
 
+        System.out.print("Los valores ingresados son: ");
+        mostrarVectorOrdenado(vecNumeros);
+
+        if(ascDesc.equalsIgnoreCase("a")){
+            ordenAscendente(vecNumeros);
+        } else{
+            ordenDescendente(vecNumeros);
+        }
+
         mostrarVectorOrdenado(vecNumeros);
 
     }
@@ -46,17 +55,17 @@ public class Main {
         }while(true);
     }
 
-    public static void ordenAscendente(String[] a){
+    public static void ordenAscendente(int[] a){
 
-        String aux;
+        int aux = 0;
 
-        System.out.println("\n\nOrdenamiento ascendente de datos.\n");
+        System.out.print("\nOrdenamiento ascendente de datos.\n");
 
-        for(int i = 0; i < a.length-2; i++){
+        for(int i = 0; i < a.length-1; i++){
 
-            for(int j = 0; j < a.length-i-2; j++){
+            for(int j = 0; j < a.length-i-1; j++){
 
-                if( Integer.parseInt(a[j]) > Integer.parseInt(a[j+1]) ){
+                if( a[j] > a[j+1] ){
                     aux = a[j];
                     a[j] = a[j+1];
                     a[j+1] = aux;
@@ -67,16 +76,16 @@ public class Main {
 
     }
 
-    public static void ordenDescendente(String[] a){
-        String aux;
+    public static void ordenDescendente(int[] a){
+        int aux;
 
-        System.out.println("\n\nOrdenamiento descendente de datos.\n");
+        System.out.print("\nOrdenamiento descendente de datos.\n");
 
-        for(int i = 0; i < a.length-2; i++){
+        for(int i = 0; i < a.length-1; i++){
 
-            for(int j = 0; j < a.length-i-2; j++){
+            for(int j = 0; j < a.length-i-1; j++){
 
-                if( Integer.parseInt(a[j]) < Integer.parseInt(a[j+1]) ){
+                if( a[j] < a[j+1] ){
                     aux = a[j];
                     a[j] = a[j+1];
                     a[j+1] = aux;
@@ -91,6 +100,8 @@ public class Main {
         for(int i = 0; i < a.length; i++){
             System.out.print(a[i] + " ");
         }
+
+        System.out.print("\n");
 
     }
 
