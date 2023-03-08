@@ -32,8 +32,11 @@ public class Main {
 
         String vectorPalabra [] = s.split("");
         char aux[] = new char[vectorPalabra.length];
-        int cont = 0;
-        int valorChar = 0;
+        int cont = 0, valorChar = 0, resto = 0;
+
+        Boolean flag = false;
+        //El flag tiene como funcionalidad evitar que el segundo if del for
+        // se ejecute cuando ya se ejecuto el primer for.
 
         for (String letra:vectorPalabra){
             aux[cont] = letra.charAt(0);
@@ -41,8 +44,19 @@ public class Main {
         }
 
         for(int i = 0; i < aux.length; i++){
-            valorChar = aux[i];
-            aux[i] += n;
+
+            if(aux[i] != ' ' && aux[i] + n <= 122) {
+                valorChar = aux[i];
+                aux[i] += n;
+                flag = true;
+            }
+
+            if(aux[i] + n > 122 && flag == false){
+                resto = 96 + n - (122 - aux[i]);
+                aux[i] = (char) resto;
+            }
+            flag = false;
+
             System.out.print(aux[i]);
         }
 
