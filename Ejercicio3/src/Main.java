@@ -1,6 +1,7 @@
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.nio.file.StandardOpenOption;
 
 public class Main {
     public static void main(String[] args) throws IOException {
@@ -18,8 +19,7 @@ public class Main {
 
         try {
             for (String line: Files.readAllLines(Paths.get(rutaEntrada))) {
-                codificar(line, desplazamiento);
-                System.out.print(line + " ");
+                codificar(line, desplazamiento, rutaSalida);
             }
         } catch (IOException e) {
             System.out.println("No se encontro el archivo.");
@@ -28,11 +28,12 @@ public class Main {
 
     }
 
-    public static void codificar (String s, int n){
+    public static void codificar (String s, int n, String rutaSal) throws IOException {
 
         String vectorPalabra [] = s.split("");
         char aux[] = new char[vectorPalabra.length];
         int cont = 0, valorChar = 0, resto = 0;
+        String palabraCompleta ="";
 
         Boolean flag = false;
         //El flag tiene como funcionalidad evitar que el segundo if del for
@@ -57,8 +58,11 @@ public class Main {
             }
             flag = false;
 
+            palabraCompleta = palabraCompleta.concat(String.valueOf(aux[i]));
             System.out.print(aux[i]);
         }
+
+        Files.writeString(Paths.get(rutaSal), palabraCompleta);
 
     }
 
