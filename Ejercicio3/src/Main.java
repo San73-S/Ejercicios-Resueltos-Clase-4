@@ -13,13 +13,14 @@ public class Main {
 
         String rutaEntrada = args[0];
         String rutaSalida = args[1];
+        String codiODeco = args[2];
         int desplazamiento = Integer.parseInt(args[3]);
 
         System.out.println(rutaEntrada + "\n" +rutaSalida + " \n" + args[2] + "\n" + args[3]);
 
         try {
             for (String line: Files.readAllLines(Paths.get(rutaEntrada))) {
-                codificar(line, desplazamiento, rutaSalida);
+                codificarODecodificar(line, desplazamiento, rutaSalida, codiODeco);
             }
         } catch (IOException e) {
             System.out.println("No se encontro el archivo.");
@@ -28,26 +29,45 @@ public class Main {
 
     }
 
-    public static void codificar (String s, int n, String rutaSal) throws IOException {
+    public static void codificarODecodificar (String s, int n, String rutaSal, String cd) throws IOException {
 
         String vectorPalabra [] = s.split("");
         char aux[] = new char[vectorPalabra.length];
-        int cont = 0, valorChar = 0, resto = 0;
         String palabraCompleta ="";
+
+        cargarVectorAuxiliar(vectorPalabra, aux);
+
+        if (cd.equalsIgnoreCase("c")){
+            palabraCompleta = codificador(aux, n);
+        } else{
+            n = n*-1;
+            palabraCompleta = decodificador(aux, n);
+        }
+
+        Files.writeString(Paths.get(rutaSal), palabraCompleta);
+    }
+
+    public static void cargarVectorAuxiliar(String[] s, char[] c){
+        int cont = 0;
+
+        for (String letra:s){
+            c[cont] = letra.charAt(0);
+            cont++;
+        }
+    }
+
+    public static String codificador(char[] aux, int n){
+
+        String palabra="";
+        int resto = 0;
 
         Boolean flag = false;
         //El flag tiene como funcionalidad evitar que el segundo if del for
         // se ejecute cuando ya se ejecuto el primer for.
 
-        for (String letra:vectorPalabra){
-            aux[cont] = letra.charAt(0);
-            cont++;
-        }
-
         for(int i = 0; i < aux.length; i++){
 
-            if(aux[i] != ' ' && aux[i] + n <= 122) {
-                valorChar = aux[i];
+            if(aux[i] != ' ' && aux[i] + n <= 122){
                 aux[i] += n;
                 flag = true;
             }
@@ -58,12 +78,40 @@ public class Main {
             }
             flag = false;
 
-            palabraCompleta = palabraCompleta.concat(String.valueOf(aux[i]));
+            palabra = palabra.concat(String.valueOf(aux[i]));
             System.out.print(aux[i]);
         }
 
-        Files.writeString(Paths.get(rutaSal), palabraCompleta);
+        return palabra;
+    }
 
+    public static String decodificador(char[] aux, int n){
+
+        String palabra="";
+        int resto = 0;
+
+        Boolean flag = false;
+        //El flag tiene como funcionalidad evitar que el segundo if del for
+        // se ejecute cuando ya se ejecuto el primer for.
+
+        for(int i = 0; i < aux.length; i++){
+
+            if(aux[i] != ' ' && aux[i] + n <= 122){
+                aux[i] += n;
+                flag = true;
+            }
+
+            if(aux[i] + n > 122 && flag == false){
+                resto = 96 + n - (122 - aux[i]);
+                aux[i] = (char) resto;
+            }
+            flag = false;
+
+            palabra = palabra.concat(String.valueOf(aux[i]));
+            System.out.print(aux[i]);
+        }
+
+        return palabra;
     }
 
 }
