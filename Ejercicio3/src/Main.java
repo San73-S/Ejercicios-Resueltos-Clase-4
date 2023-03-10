@@ -1,24 +1,18 @@
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.nio.file.StandardOpenOption;
 
 public class Main {
     public static void main(String[] args) throws IOException {
-        /*char arroba = ('A');
-        int valor = arroba;
-        arroba += 1;
 
-        System.out.println(valor + "  " + arroba);*/
-
-        String rutaEntrada = args[0];
-        String rutaSalida = args[1];
+        //String rutaEntrada = args[0];
+        //String rutaSalida = args[1];
         String codiODeco = args[2];
         int desplazamiento = Integer.parseInt(args[3]);
 
         try {
-            for (String line: Files.readAllLines(Paths.get(rutaEntrada))) {
-                codificarODecodificar(line, desplazamiento, rutaSalida, codiODeco);
+            for (String line: Files.readAllLines(Paths.get("src\\Archivos\\","Entrada.txt"))) {
+                codificarODecodificar(line, desplazamiento, codiODeco);
             }
         } catch (IOException e) {
             System.out.println("No se encontro el archivo.");
@@ -27,7 +21,7 @@ public class Main {
 
     }
 
-    public static void codificarODecodificar (String s, int n, String rutaSal, String cd) throws IOException {
+    public static void codificarODecodificar (String s, int n, String cd) throws IOException {
 
         String vectorPalabra [] = s.split("");
         char aux[] = new char[vectorPalabra.length];
@@ -44,7 +38,7 @@ public class Main {
             System.out.println("El archivo se decodifico correctamente.");
         }
 
-        Files.writeString(Paths.get(rutaSal), palabraCompleta);
+        Files.writeString(Paths.get("src\\Archivos\\","Salida.txt"), palabraCompleta);
     }
 
     public static void cargarVectorAuxiliar(String[] s, char[] c){
@@ -79,7 +73,6 @@ public class Main {
             flag = false;
 
             palabra = palabra.concat(String.valueOf(aux[i]));
-            System.out.print(aux[i]);
         }
 
         return palabra;
@@ -110,7 +103,6 @@ public class Main {
             flag = false;
 
             palabra = palabra.concat(String.valueOf(aux[i]));
-            System.out.print(aux[i]);
         }
 
         return palabra;
